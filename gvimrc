@@ -1,11 +1,10 @@
-" Include user's local pre .gvimrc config
-if filereadable(expand("~/.gvimrc.pre"))
-  source ~/.gvimrc.pre
-endif
-
 if has("gui_macvim")
   " Fullscreen takes up entire screen
   set fuoptions=maxhorz,maxvert
+
+  set guioptions-=r
+
+  set guioptions-=L
 
   " Command-T for CommandT
   macmenu &File.New\ Tab key=<D-T>
@@ -65,6 +64,7 @@ if has("gui_macvim")
   " Adjust viewports to the same size
   map <Leader>= <C-w>=
   imap <Leader>= <Esc> <C-w>=
+
 endif
 
 " Don't beep
@@ -73,8 +73,10 @@ set visualbell
 " Start without the toolbar
 set guioptions-=T
 
+set guifont=Monaco:h14
+
 " Default gui color scheme
-color ir_black
+color Molokai
 
 " ConqueTerm wrapper
 function StartTerm()
@@ -83,11 +85,9 @@ function StartTerm()
 endfunction
 
 " Project Tree
-if exists("loaded_nerd_tree")
-  autocmd VimEnter * call s:CdIfDirectory(expand("<amatch>"))
-  autocmd FocusGained * call s:UpdateNERDTree()
-  autocmd WinEnter * call s:CloseIfOnlyNerdTreeLeft()
-endif
+autocmd VimEnter * call s:CdIfDirectory(expand("<amatch>"))
+autocmd FocusGained * call s:UpdateNERDTree()
+autocmd WinEnter * call s:CloseIfOnlyNerdTreeLeft()
 
 " Close all open buffers on entering a window if the only
 " buffer that's left is the NERDTree buffer
@@ -224,17 +224,20 @@ ruby << RUBY
 RUBY
 endfunction
 
+macmenu &File.Close key=<nop>
+nmap <D-w> :CommandW<CR>
+imap <D-w> <Esc>:CommandW<CR>
+
 " Define the NERDTree-aware aliases
-if exists("loaded_nerd_tree")
-  call s:DefineCommand("cd", "ChangeDirectory")
-  call s:DefineCommand("touch", "Touch")
-  call s:DefineCommand("rm", "Remove")
-  call s:DefineCommand("e", "Edit")
-  call s:DefineCommand("mkdir", "Mkdir")
-  cabbrev Edit! e!
-endif
+call s:DefineCommand("cd", "ChangeDirectory")
+call s:DefineCommand("touch", "Touch")
+call s:DefineCommand("rm", "Remove")
+call s:DefineCommand("e", "Edit")
+call s:DefineCommand("mkdir", "Mkdir")
 
 " Include user's local vim config
 if filereadable(expand("~/.gvimrc.local"))
   source ~/.gvimrc.local
 endif
+
+call pathogen#infect()
