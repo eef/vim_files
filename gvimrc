@@ -2,6 +2,15 @@ if has("gui_macvim")
   " Fullscreen takes up entire screen
   set fuoptions=maxhorz,maxvert
 
+  set foldmethod=indent   "fold based on indent
+  set foldnestmax=10      "deepest fold is 10 levels
+  set nofoldenable        "dont fold by default
+  set foldlevel=1         "this is just what i use
+
+  filetype on
+
+  set tags=tags;
+
   set guioptions-=r
 
   set guioptions-=L
@@ -69,11 +78,15 @@ endif
 
 " Don't beep
 set visualbell
-
+map <Leader>tb :TagbarToggle<CR>
 " Start without the toolbar
 set guioptions-=T
 
 set guifont=Monaco:h14
+
+filetype on
+
+set tags=tags;
 
 " Default gui color scheme
 color Molokai

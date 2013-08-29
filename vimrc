@@ -1,8 +1,14 @@
 set nocompatible
-
+set tags=tags;
+filetype on
 set number
 set ruler
 syntax on
+
+set foldmethod=indent   "fold based on indent
+set foldnestmax=10      "deepest fold is 10 levels
+set nofoldenable        "dont fold by default
+set foldlevel=1         "this is just what i use
 
 " Set encoding
 set encoding=utf-8
@@ -36,7 +42,7 @@ set noequalalways
 " NERDTree configuration
 let NERDTreeIgnore=['\.pyc$', '\.rbc$', '\~$']
 map <Leader>n :NERDTreeToggle<CR>
-
+map <Leader>tb :TagbarToggle<CR>
 " Command-T configuration
 let g:CommandTMaxHeight=20
 
